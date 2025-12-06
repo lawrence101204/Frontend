@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import  Logo from "../public/lavera.png"
 
 export default function Navbar() {
   const location = useLocation();
@@ -32,7 +33,7 @@ export default function Navbar() {
           onClick={handleLogoClick}
         >
           <img
-            src="/lavera.png"
+            src={lavera.png}
             alt="Lavera Bus Tour Logo"
             className="w-12 h-12 object-contain rounded-full"
           />
