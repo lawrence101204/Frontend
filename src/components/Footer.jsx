@@ -152,4 +152,3 @@ export default function Footer() {
     </footer>
   );
 }
-www.w3.org
