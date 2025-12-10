@@ -1,3 +1,4 @@
+import TourCard from "../components/TourCard";
 export default function TourPage() {
   return (
     <main className="px-6">
@@ -47,11 +48,10 @@ export default function TourPage() {
       </div>
 
       {/* TOUR GRID */}
-      <div className="grid grid-cols-4 gap-4">
-        <div>01</div>
-        <div>02</div>
-        <div>03</div>
-        <div>04</div>
+      <div className="grid grid-cols-4 gap-4"></div>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <TourCard />
       </div>
     </main>
   );
