@@ -20,12 +20,7 @@ export default function PackagePage() {
     loadTours();
   }, []);
 
-  const openAdd = () => {
-    setEditingTour(null);
-    setModalOpen(true);
-  };
-
-  const openEditSelected = () => {
+const openEditSelected = () => {
     const tour = tours.find((t) => t.id === selectedId);
     if (!tour) return alert("No tour selected");
     setEditingTour(tour);
