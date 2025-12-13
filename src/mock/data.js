@@ -30,3 +30,24 @@ export let tours = [
     details: "Relaxing island hopping with clear waters perfect for snorkeling and swimming.",
   }
 ];
+
+
+
+function nextId(list) {
+  return list.length ? Math.max(...list.map((item) => Number(item.id) || 0)) + 1 : 1;
+}
+
+export function getTours() {
+  return Promise.resolve([...tours]);
+}
+
+
+export function deleteTour(id) {
+  tours = tours.filter((t) => Number(t.id) !== Number(id));
+  return Promise.resolve();
+}
+
+export function deleteInquiry(id) {
+  inquiries = inquiries.filter((inq) => Number(inq.id) !== Number(id));
+  return Promise.resolve();
+}
