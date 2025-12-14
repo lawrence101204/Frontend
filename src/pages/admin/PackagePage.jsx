@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-
+import TourFormModal from "../../components/admin/TourFormModal.jsx";
 import { getTours } from "../../mock/data.js";
 
 export default function PackagePage() {
   const [tours, setTours] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
   const loadTours = async () => {
@@ -20,9 +21,13 @@ export default function PackagePage() {
     loadTours();
   }, []);
 
-  return (
+  const openAdd = () => {
+    setEditingTour(null);
+    setModalOpen(true);
+  };
 
-     <div>
+  return (
+    <div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {tours.map((t) => {
           const selected = t.id === selectedId;
@@ -70,15 +75,16 @@ export default function PackagePage() {
         {tours.length === 0 && (
           <p className="text-sm text-gray-500 col-span-full">
             No tours defined yet.
-             </p>
-
-              )}
+          </p>
+        )}
       </div>
       <div className="flex justify-end gap-3 mt-6">
-        <button className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]">
+        <button
+          onClick={openAdd}
+          className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]"
+        >
           + Add Tour
         </button>
-
         <button className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]">
           Edit
         </button>
@@ -86,7 +92,11 @@ export default function PackagePage() {
           Delete
         </button>
       </div>
+      <TourFormModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSaved={loadTours}
+      />
     </div>
   );
 }
-
