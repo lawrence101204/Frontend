@@ -30,7 +30,7 @@ export let tours = [
     details: "Relaxing island hopping with clear waters perfect for snorkeling and swimming.",
   }
 ];
-];
+
 
 export let inquiries  = [
   {
