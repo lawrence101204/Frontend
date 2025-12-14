@@ -1,16 +1,16 @@
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
-
 import ToursPage from "./pages/ToursPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-
 import AdminLayout from "./pages/admin/AdminLayout.jsx";
 
 const isAuthenticated = () =>
   localStorage.getItem("lavera_admin_token") === "lavera-admin-token";
 
 export default function App() {
+  const location = useLocation();
+  const hideFooter = location.pathname.startsWith("/admin");
+
   return (
     
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 text-gray-800">
