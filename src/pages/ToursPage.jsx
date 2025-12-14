@@ -241,7 +241,6 @@ export default function ToursPage() {
 
       {/* Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <TourCard />
         {filtered.map((tour) => (
           <TourCard
             key={tour.id}

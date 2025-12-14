@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getInquiries } from "../../mock/data.js";
+import {
+  getInquiries,
+  deleteInquiry as deleteInquiryMock,
+} from "../../mock/data.js";
 
 function InquiryViewModal({ open, onClose, inquiry }) {
   if (!open || !inquiry) return null;
@@ -74,6 +77,8 @@ function InquiryViewModal({ open, onClose, inquiry }) {
 
 export default function InquiryPage() {
   const [inquiries, setInquiries] = useState([]);
+  const [viewOpen, setViewOpen] = useState(false);
+  const [selectedInquiry, setSelectedInquiry] = useState(null);
 
   const loadInquiries = async () => {
     try {
@@ -87,6 +92,22 @@ export default function InquiryPage() {
   useEffect(() => {
     loadInquiries();
   }, []);
+
+  const deleteInquiry = async (id) => {
+    if (!window.confirm("Delete this inquiry? (mock only)")) return;
+    try {
+      await deleteInquiryMock(id);
+      loadInquiries();
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting inquiry (mock).");
+    }
+  };
+
+  const openView = (inq) => {
+    setSelectedInquiry(inq);
+    setViewOpen(true);
+  };
 
   return (
     <div>
@@ -115,6 +136,7 @@ export default function InquiryPage() {
                 {inq.status || "Available"}
               </p>
             </div>
+
             <div className="flex items-center justify-between mt-3">
               <button
                 onClick={() => openView(inq)}
@@ -122,12 +144,27 @@ export default function InquiryPage() {
               >
                 view
               </button>
+              <button
+                onClick={() => deleteInquiry(inq.id)}
+                className="px-4 py-1 rounded-full border border-red-300 text-red-600 hover:bg-red-50 text-xs"
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}
+        {inquiries.length === 0 && (
+          <p className="text-sm text-gray-500 col-span-full">
+            No inquiries yet.
+          </p>
+        )}
       </div>
 
-      <InquiryViewModal />
+      <InquiryViewModal
+        open={viewOpen}
+        onClose={() => setViewOpen(false)}
+        inquiry={selectedInquiry}
+      />
     </div>
   );
 }

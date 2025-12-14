@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import TourFormModal from "../../components/admin/TourFormModal.jsx";
-
 import { getTours, deleteTour as deleteTourMock } from "../../mock/data.js";
 
 export default function PackagePage() {
@@ -48,7 +47,7 @@ export default function PackagePage() {
     }
   };
 
- return (
+  return (
     <div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {tours.map((t) => {
@@ -113,7 +112,7 @@ export default function PackagePage() {
         >
           Edit
         </button>
-       <button
+        <button
           onClick={deleteSelected}
           className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]"
         >

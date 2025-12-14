@@ -37,6 +37,7 @@ export default function AdminLayout() {
             Inquiry
           </button>
         </div>
+
         <button
           onClick={logout}
           className="px-4 py-2 rounded-full border border-gray-400 text-sm hover:bg-gray-50"
@@ -44,6 +45,7 @@ export default function AdminLayout() {
           Sign out
         </button>
       </div>
+
       {tab === "package" ? <PackagePage /> : <InquiryPage />}
     </main>
   );
