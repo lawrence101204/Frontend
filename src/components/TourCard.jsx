@@ -21,7 +21,7 @@ export default function TourCard({ tour, onInquire, onViewDetails }) {
         </p>
       </div>
 
-      <div className="flex gap-2 mt-4">
+        <div className="flex gap-2 mt-4">
         <button
           className="flex-1 border border-gray-400 rounded-full text-sm py-[6px] hover:bg-gray-50"
           onClick={() => onViewDetails && onViewDetails(tour)}

@@ -30,3 +30,52 @@ export let tours = [
     details: "Relaxing island hopping with clear waters perfect for snorkeling and swimming.",
   }
 ];
+];
+
+export let inquiries  = [
+  {
+    id: 1,
+    name: "Juan Dela Cruz",
+    email: "juan@example.com",
+    message: "Hi, can I get the full itinerary for the heritage tour?",
+    status: "Pending",
+    type: "Historical",
+    package_name: "Cebu City Heritage Tour",
+    locations: "Magellan's Cross · Basilica del Sto. Niño · Fort San Pedro",
+    createdAt: "2025-01-10 09:30 AM",
+  },
+  {
+    id: 2,
+    name: "Maria Santos",
+    email: "maria@example.com",
+    message: "Do you have weekday discounts for groups?",
+    status: "Replied",
+    type: "Island",
+    package_name: "Island Hopping Getaway",
+    locations: "Mactan · Hilutungan · Nalusuan",
+    createdAt: "2025-01-11 02:15 PM",
+  }
+];
+
+function nextId(list) {
+  return list.length ? Math.max(...list.map((item) => Number(item.id) || 0)) + 1 : 1;
+}
+
+export function getTours() {
+  return Promise.resolve([...tours]);
+}
+
+
+export function deleteTour(id) {
+  tours = tours.filter((t) => Number(t.id) !== Number(id));
+  return Promise.resolve();
+}
+
+export function getInquiries() {
+  return Promise.resolve([...inquiries]);
+}
+
+export function deleteInquiry(id) {
+  inquiries = inquiries.filter((inq) => Number(inq.id) !== Number(id));
+  return Promise.resolve();
+}
