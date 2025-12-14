@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import TourCard from "../components/TourCard.jsx";
-import { getTours } from "../mock/data.js";
+import InquiryModal from "../components/InquiryModal.jsx";
+import { getTours, addInquiry } from "../mock/data.js";
 
 // Helper: convert "10h" or "7h 45m" -> minutes
 function durationToMinutes(str = "") {
@@ -88,6 +89,10 @@ export default function ToursPage() {
   const [typeFilter, setTypeFilter] = useState("All types");
   const [sortBy, setSortBy] = useState("recommendation"); // recommendation | price-asc | price-desc | duration-asc | name-asc
 
+  const [selectedTour, setSelectedTour] = useState(null);
+  const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [detailsTour, setDetailsTour] = useState(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const [search, setSearch] = useState("");
 
   const loadTours = async () => {
@@ -153,15 +158,38 @@ export default function ToursPage() {
   }, [tours, search, typeFilter, sortBy]);
 
   // modal handlers
+  const handleInquire = (tour) => {
+    setSelectedTour(tour);
+    setInquiryOpen(true);
+  };
+
+  const handleSubmitInquiry = async (payload) => {
+    try {
+      await addInquiry({
+        ...payload,
+        package_name: selectedTour?.name,
+        type: selectedTour?.type,
+        locations: selectedTour?.locations,
+      });
+      alert("Inquiry sent! (mock data only)");
+      setInquiryOpen(false);
+    } catch (err) {
+      console.error(err);
+      alert("Error sending inquiry (mock).");
+    }
+  };
+
+  const openDetails = (tour) => {
+    setDetailsTour(tour);
+    setDetailsOpen(true);
+  };
 
   return (
     <main className="px-6">
       {/* Filters & search bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
-        {/* LEFT SIDE FILTERS */}
         <div className="flex flex-wrap items-center gap-3">
-          {/* TYPE FILTER */}
-
+          {/* TYPE FILTER (select styled like your pill) */}
           <div className="relative">
             <select
               value={typeFilter}
@@ -178,7 +206,7 @@ export default function ToursPage() {
             </span>
           </div>
 
-          {/* SORT FILTER */}
+          {/* SORT (select styled like your pill) */}
           <div className="relative">
             <select
               value={sortBy}
@@ -197,7 +225,6 @@ export default function ToursPage() {
           </div>
         </div>
 
-
         <div className="flex-1 md:max-w-md">
           <div className="flex items-center bg-white border border-gray-300 rounded-full px-4 py-2 shadow-sm">
             <span className="text-gray-400 mr-2">🔎︎</span>
@@ -212,13 +239,35 @@ export default function ToursPage() {
         </div>
       </div>
 
-
       {/* Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <TourCard />
+        {filtered.map((tour) => (
+          <TourCard
+            key={tour.id}
+            tour={tour}
+            onInquire={handleInquire}
+            onViewDetails={openDetails}
+          />
+        ))}
+        {filtered.length === 0 && (
+          <p className="text-sm text-gray-500 col-span-full">No tours found.</p>
+        )}
       </div>
 
       {/* Modals */}
+      <InquiryModal
+        open={inquiryOpen}
+        tour={selectedTour}
+        onClose={() => setInquiryOpen(false)}
+        onSubmit={handleSubmitInquiry}
+      />
+
+      <DetailsModal
+        open={detailsOpen}
+        onClose={() => setDetailsOpen(false)}
+        tour={detailsTour}
+      />
     </main>
   );
 }
