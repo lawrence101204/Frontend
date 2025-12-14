@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import TourFormModal from "../../components/admin/TourFormModal.jsx";
+import { getTours, deleteTour as deleteTourMock } from "../../mock/data.js";
 
 export default function PackagePage() {
   const [tours, setTours] = useState([]);
@@ -26,4 +28,5 @@ const openEditSelected = () => {
     setEditingTour(tour);
     setModalOpen(true);
   };
+  
 }
