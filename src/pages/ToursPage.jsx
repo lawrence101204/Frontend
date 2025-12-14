@@ -1,5 +1,35 @@
-import TourCard from "../components/TourCard";
-export default function TourPage() {
+import { useEffect, useState } from "react";
+import TourCard from "../components/TourCard.jsx";
+
+  export default function ToursPage() {
+  const [tours, setTours] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+
+  // NEW: filter + sort state
+  const [typeFilter, setTypeFilter] = useState("All types");
+  const [sortBy, setSortBy] = useState("recommendation"); // recommendation | price-asc | price-desc | duration-asc | name-asc
+
+  const [selectedTour, setSelectedTour] = useState(null);
+  const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [detailsTour, setDetailsTour] = useState(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const loadTours = async () => {
+    try {
+      const data = await getTours();
+      const safe = Array.isArray(data) ? data : [];
+      setTours(safe);
+      setFiltered(safe);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    loadTours();
+  }, []);
+
   return (
     <main className="px-6">
       {/* Filters & search bar */}
