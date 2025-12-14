@@ -38,11 +38,8 @@ export default function AdminLayout() {
           </button>
         </div>
 
-        <button
-          onClick={logout}
-          className="px-4 py-2 rounded-full border border-gray-400 text-sm hover:bg-gray-50"
-        >
-          Sign out
+        <button className="px-4 py-2 rounded-full border border-gray-400 text-sm hover:bg-gray-50">
+            Sign out
         </button>
       </div>
 
