@@ -31,7 +31,7 @@ export let tours = [
   }
 ];
 
-export let inquiries = [
+export let inquiries  = [
   {
     id: 1,
     name: "Juan Dela Cruz",
@@ -56,14 +56,11 @@ export let inquiries = [
   }
 ];
 
+
+
 function nextId(list) {
   return list.length ? Math.max(...list.map((item) => Number(item.id) || 0)) + 1 : 1;
 }
-
-export function getTours() {
-  return Promise.resolve([...tours]);
-}
-
 
 export function getTours() {
   return Promise.resolve([...tours]);
@@ -83,16 +80,23 @@ export function saveTour(payload, id) {
 }
 
 export function deleteTour(id) {
-  tours = tours.filter(t => Number(t.id) !== Number(id));
+  tours = tours.filter((t) => Number(t.id) !== Number(id));
   return Promise.resolve();
 }
-
 
 export function getInquiries() {
   return Promise.resolve([...inquiries]);
 }
 
+export function addInquiry(payload) {
+  const id = nextId(inquiries);
+  const createdAt = new Date().toLocaleString();
+  const full = { id, status: "Pending", createdAt, ...payload };
+  inquiries = [full, ...inquiries];
+  return Promise.resolve(full);
+}
+
 export function deleteInquiry(id) {
-  inquiries = inquiries.filter(inq => Number(inq.id) !== Number(id));
+  inquiries = inquiries.filter((inq) => Number(inq.id) !== Number(id));
   return Promise.resolve();
 }

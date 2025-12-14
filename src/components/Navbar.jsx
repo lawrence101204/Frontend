@@ -9,7 +9,7 @@ export default function Navbar() {
   const isAdminArea =
     location.pathname.startsWith("/admin") || location.pathname === "/login";
 
-  // SECRET CLICK COUNTER FOR LOGO
+  // 🔥 SECRET CLICK COUNTER FOR LOGO
   const [clickCount, setClickCount] = useState(0);
 
   const handleLogoClick = () => {
@@ -60,7 +60,7 @@ export default function Navbar() {
             Tours
           </Link>
 
-          {/* ADMIN BUTTON HIDDEN */}
+          {/* 🔒 ADMIN BUTTON HIDDEN */}
           {/* 
           <button
             onClick={handleAdminClick}

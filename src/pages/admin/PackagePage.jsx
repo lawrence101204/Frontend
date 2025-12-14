@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-
-import { getTours } from "../../mock/data.js";
+import TourFormModal from "../../components/admin/TourFormModal.jsx";
+import { getTours, deleteTour as deleteTourMock } from "../../mock/data.js";
 
 export default function PackagePage() {
   const [tours, setTours] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingTour, setEditingTour] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
 
   const loadTours = async () => {
@@ -20,9 +22,33 @@ export default function PackagePage() {
     loadTours();
   }, []);
 
-  return (
+  const openAdd = () => {
+    setEditingTour(null);
+    setModalOpen(true);
+  };
 
-     <div>
+  const openEditSelected = () => {
+    const tour = tours.find((t) => t.id === selectedId);
+    if (!tour) return alert("No tour selected");
+    setEditingTour(tour);
+    setModalOpen(true);
+  };
+
+  const deleteSelected = async () => {
+    const tour = tours.find((t) => t.id === selectedId);
+    if (!tour) return alert("No tour selected");
+    if (!window.confirm(`Delete "${tour.name}"? (mock only)`)) return;
+    try {
+      await deleteTourMock(tour.id);
+      loadTours();
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting tour (mock).");
+    }
+  };
+
+  return (
+    <div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {tours.map((t) => {
           const selected = t.id === selectedId;
@@ -68,25 +94,37 @@ export default function PackagePage() {
           );
         })}
         {tours.length === 0 && (
-          <p className="text-sm text-gray-500 col-span-full">
+          <p className="text-sm text-gray-500 col-span-full text-center">
             No tours defined yet.
-             </p>
-
-              )}
+          </p>
+        )}
       </div>
       <div className="flex justify-end gap-3 mt-6">
-        <button className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]">
+        <button
+          onClick={openAdd}
+          className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]"
+        >
           + Add Tour
         </button>
-
-        <button className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]">
+        <button
+          onClick={openEditSelected}
+          className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]"
+        >
           Edit
         </button>
-        <button className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]">
+        <button
+          onClick={deleteSelected}
+          className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]"
+        >
           Delete
         </button>
       </div>
+      <TourFormModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        initial={editingTour}
+        onSaved={loadTours}
+      />
     </div>
   );
 }
-
