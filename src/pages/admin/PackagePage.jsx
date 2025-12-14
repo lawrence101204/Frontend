@@ -78,6 +78,13 @@ export default function PackagePage() {
         <button className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]">
           + Add Tour
         </button>
+
+        <button className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]">
+          Edit
+        </button>
+        <button className="px-6 py-2 rounded-full bg-[#d3ebd7] text-sm font-medium hover:bg-[#c1dfc7]">
+          Delete
+        </button>
       </div>
     </div>
   );
